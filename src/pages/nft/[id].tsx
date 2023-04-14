@@ -1,6 +1,10 @@
 import React from 'react';
+import { Web3Button, ConnectWallet, useAddress } from '@thirdweb-dev/react';
 
 function NFTDropPage() {
+  const address = useAddress();
+  console.log('Address:', address);
+
   return (
     <div className="flex h-screen flex-col lg:grid lg:grid-cols-10">
       {/* LEFT */}
@@ -36,9 +40,15 @@ function NFTDropPage() {
             </span>{' '}
             NFT Marketplace
           </h1>
-          <button className="rounded-full bg-rose-400 px-4 py-2 text-xs font-bold text-white lg:px-5 lg:py-3 lg:text-base">
-            Sign in
-          </button>
+          <ConnectWallet
+            btnTitle="Connect Wallet"
+            theme="dark"
+            className="rounded-full bg-rose-400 px-4 py-2 text-xs font-bold text-white lg:px-5 lg:py-3 lg:text-base"
+            dropdownPosition={{
+              side: 'bottom', // "top" | "bottom" | "left" | "right";
+              align: 'end', // "start" | "center" | "end";
+            }}
+          ></ConnectWallet>
         </header>
         <hr className="my-2 border" />
         {/* CONTENT */}
