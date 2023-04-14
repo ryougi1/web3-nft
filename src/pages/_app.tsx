@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 import { ThirdwebProvider } from '@thirdweb-dev/react';
 
 // const activeChain = 'ethereum';
-const activeChain = 'goerli';
+const activeChain = 'sepolia';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
