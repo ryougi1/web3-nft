@@ -1,13 +1,11 @@
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { ThirdwebProvider } from '@thirdweb-dev/react';
-
-// const activeChain = 'ethereum';
-const activeChain = 'sepolia';
+import { Sepolia } from '@thirdweb-dev/chains';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThirdwebProvider activeChain={activeChain}>
+    <ThirdwebProvider activeChain={Sepolia}>
       <Component {...pageProps} />;
     </ThirdwebProvider>
   );

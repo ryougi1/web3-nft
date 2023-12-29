@@ -1,5 +1,5 @@
 import React from 'react';
-import { Web3Button, ConnectWallet, useAddress } from '@thirdweb-dev/react';
+import { ConnectWallet, useAddress } from '@thirdweb-dev/react';
 
 function NFTDropPage() {
   const address = useAddress();
@@ -12,7 +12,6 @@ function NFTDropPage() {
         <div className="flex flex-col items-center justify-center py-2 lg:min-h-screen">
           <div className="rounded-xl bg-gradient-to-br from-[#385783] to-[#EF8432] p-2">
             <img
-              // src="https://www.instagram.com/p/CqX7OLNslmy/media?size=l"
               src="https://i5.walmartimages.com/asr/bc76c0b0-ab1e-4636-9335-42de23722660.b53ce9d56602c72762bc5c687d179865.jpeg?odnHeight=450&odnWidth=450&odnBg=ffffff"
               className="w-44 rounded-xl object-cover lg:h-96 lg:w-72"
               alt=""
@@ -50,7 +49,13 @@ function NFTDropPage() {
             }}
           ></ConnectWallet>
         </header>
-        <hr className="my-2 border" />
+        <hr className="my-4 border" />
+        {address && (
+          <p className="text-center text-sm text-green-500">
+            You are logged in with wallet {address.substring(0, 5)}...
+            {address.substring(address.length - 5)}
+          </p>
+        )}
         {/* CONTENT */}
         <div className="mt-10 flex flex-1 flex-col items-center space-y-6 text-center lg:justify-center lg:space-y-0">
           <img
