@@ -77,6 +77,6 @@ export async function getServerSideProps() {
   },
 }`;
   const collections = await sanityClient.fetch(query);
-  console.log('ssr:', collections);
+  // console.log('ssr home:', collections);
   return { props: { collections } };
 }

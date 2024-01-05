@@ -6,7 +6,7 @@ import { Sepolia } from '@thirdweb-dev/chains';
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThirdwebProvider activeChain={Sepolia}>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </ThirdwebProvider>
   );
 }
