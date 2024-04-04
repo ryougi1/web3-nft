@@ -19,11 +19,8 @@ export default function Page({ collections }: Props) {
       </Head>
 
       <h1 className="text-4xl font-extralight mb-8">
-        The{' '}
-        <span className="font-extrabold underline decoration-pink-600/50">
-          ORIOR
-        </span>{' '}
-        NFT Marketplace
+        The <span className="font-extrabold underline decoration-pink-600/50">ORIOR</span> NFT
+        Marketplace
       </h1>
 
       <main className="bg-slate-100 p-10 shadow-md">
@@ -38,9 +35,8 @@ export default function Page({ collections }: Props) {
                 />
                 <div className="p-5">
                   <h2 className="text-3xl">{collection.title}</h2>
-                  <p className="mt-2 text-sm text-gray-400">
-                    {collection.description}
-                  </p>
+                  <p className="mt-2 text-sm text-gray-400">{collection.description}</p>
+                  <p className="mt-2 text-sm text-gray-400">{collection.smartContractAddress}</p>
                 </div>
               </div>
             </Link>

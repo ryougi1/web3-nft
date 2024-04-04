@@ -1,5 +1,11 @@
 import React from 'react';
-import { ConnectWallet, useAddress } from '@thirdweb-dev/react';
+import {
+  ConnectWallet,
+  useAddress,
+  useClaimedNFTs,
+  useContract,
+  useUnclaimedNFTs,
+} from '@thirdweb-dev/react';
 import { sanityClient, urlFor } from '../../../sanityClient';
 import { Collection } from '../../../typings';
 import { GetServerSidePropsContext } from 'next';
@@ -11,7 +17,12 @@ interface Props {
 
 export default function NFTDropPage({ collection }: Props) {
   const address = useAddress();
-  console.log('Address:', address);
+  // console.log('Address:', address);
+  const contract = useContract(collection.smartContractAddress, 'nft-drop').contract;
+  const claimedNFTs = useClaimedNFTs(contract).data;
+  // console.log('Claimed', claimedNFTs);
+  const unclaimedNFTs = useUnclaimedNFTs(contract).data;
+  // console.log('Unclaimed', unclaimedNFTs);
 
   return (
     <div className="flex h-screen flex-col lg:grid lg:grid-cols-10">
@@ -26,15 +37,13 @@ export default function NFTDropPage({ collection }: Props) {
             />
           </div>
           <div className="space-y-2 p-5 text-center">
-            <h1 className="text-4xl font-bold text-white">{collection.nftCollectionName}</h1>
+            <h1 className="text-4xl font-bold text-white">{collection.title}</h1>
             <h2 className="text-xl text-gray-300">{collection.description}</h2>
           </div>
         </div>
       </div>
 
-      {/* RIGHT */}
       <div className="flex flex-1 flex-col p-12 lg:col-span-6">
-        {/* HEADER */}
         <header className="flex items-center justify-between">
           <Link href="/">
             <h1 className="w-52 cursor-pointer text-xl font-extralight sm:w-80">
@@ -59,7 +68,6 @@ export default function NFTDropPage({ collection }: Props) {
             {address.substring(address.length - 5)}
           </p>
         )}
-        {/* CONTENT */}
         <div className="mt-10 flex flex-1 flex-col items-center space-y-6 text-center lg:justify-center lg:space-y-0">
           <img
             src={urlFor(collection.mainImage).url()}
@@ -69,9 +77,12 @@ export default function NFTDropPage({ collection }: Props) {
           <h1 className="text-3xl font-bold lg:text-5xl lg:font-extrabold">
             The {collection.nftCollectionName} NFT Drop
           </h1>
-          <p className="pt-2 text-xl text-green-500">x/y NFTs claimed</p>
+          {claimedNFTs && unclaimedNFTs && (
+            <p className="pt-2 text-xl text-green-500">
+              {claimedNFTs.length}/{unclaimedNFTs.length} NFTs claimed
+            </p>
+          )}
         </div>
-        {/* MINT */}
         <button className="mt-10 h-16 w-full rounded-full bg-red-600 text-white font-bold">
           Mint NFT (0.01 ETH)
         </button>
