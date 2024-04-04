@@ -36,7 +36,6 @@ export default function Page({ collections }: Props) {
                 <div className="p-5">
                   <h2 className="text-3xl">{collection.title}</h2>
                   <p className="mt-2 text-sm text-gray-400">{collection.description}</p>
-                  <p className="mt-2 text-sm text-gray-400">{collection.smartContractAddress}</p>
                 </div>
               </div>
             </Link>

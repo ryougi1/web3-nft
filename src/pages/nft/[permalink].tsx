@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   ConnectWallet,
+  useActiveClaimCondition,
   useAddress,
   useClaimedNFTs,
   useContract,
@@ -19,6 +20,8 @@ export default function NFTDropPage({ collection }: Props) {
   const address = useAddress();
   // console.log('Address:', address);
   const contract = useContract(collection.smartContractAddress, 'nft-drop').contract;
+  const activeClaimCondition = useActiveClaimCondition(contract).data;
+  // console.log('ActiveClaimCondition', activeClaimCondition);
   const claimedNFTs = useClaimedNFTs(contract).data;
   // console.log('Claimed', claimedNFTs);
   const unclaimedNFTs = useUnclaimedNFTs(contract).data;
@@ -44,7 +47,7 @@ export default function NFTDropPage({ collection }: Props) {
       </div>
 
       <div className="flex flex-1 flex-col p-12 lg:col-span-6">
-        <header className="flex items-center justify-between">
+        <header className="flex items-center justify-between h-20">
           <Link href="/">
             <h1 className="w-52 cursor-pointer text-xl font-extralight sm:w-80">
               The <span className="font-extrabold underline decoration-pink-600/50">ORIOR</span> NFT
@@ -77,14 +80,43 @@ export default function NFTDropPage({ collection }: Props) {
           <h1 className="text-3xl font-bold lg:text-5xl lg:font-extrabold">
             The {collection.nftCollectionName} NFT Drop
           </h1>
-          {claimedNFTs && unclaimedNFTs && (
+          {claimedNFTs && unclaimedNFTs ? (
             <p className="pt-2 text-xl text-green-500">
               {claimedNFTs.length}/{unclaimedNFTs.length} NFTs claimed
             </p>
+          ) : (
+            <div className="relative">
+              <p className="pt-2 text-xl text-green-500 animate-pulse">Loading supply...</p>
+              <img
+                src="https://cdn.hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif"
+                alt=""
+                className="h-40 w-40 object-contain absolute -bottom-40"
+              />
+            </div>
           )}
         </div>
-        <button className="mt-10 h-16 w-full rounded-full bg-red-600 text-white font-bold">
-          Mint NFT (0.01 ETH)
+        <button
+          disabled={
+            !claimedNFTs ||
+            !unclaimedNFTs ||
+            !activeClaimCondition ||
+            !address ||
+            claimedNFTs.length === unclaimedNFTs.length
+          }
+          className="mt-10 h-16 w-full rounded-full bg-red-600 text-white font-bold disabled:bg-gray-400"
+        >
+          {!claimedNFTs || !unclaimedNFTs || !activeClaimCondition ? (
+            <>Loading</>
+          ) : !address ? (
+            <>Sign in to mint</>
+          ) : claimedNFTs.length === unclaimedNFTs.length ? (
+            <>Sold out</>
+          ) : (
+            <span className="font-bold">
+              Mint NFT ({activeClaimCondition.currencyMetadata.displayValue}{' '}
+              {activeClaimCondition.currencyMetadata.symbol})
+            </span>
+          )}
         </button>
       </div>
     </div>
